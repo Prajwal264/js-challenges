@@ -14,7 +14,9 @@
  * 
  * @returns {Number} Rounded number
  */
-module.exports.round = function (n, places = 0) {}
+module.exports.round = function(n, places = 0) {
+	return +parseFloat(n).toFixed(places);
+}
 
 
 /**
@@ -32,7 +34,15 @@ module.exports.round = function (n, places = 0) {}
  * 
  * @returns {Array} Returns the merge of all arrays
  */
-module.exports.arrayMerge = function (...arr) {}
+module.exports.arrayMerge = function(...arr) {
+	const mergedArr = [];
+	arr.forEach((arrSub) => {
+		arrSub.forEach((ele) => {
+			mergedArr.push(ele);
+		})
+	});
+	return mergedArr;
+}
 
 
 /**
@@ -51,7 +61,13 @@ module.exports.arrayMerge = function (...arr) {}
  * 
  * @return {Number} The sum of all items in the array
  */
-module.exports.arraySum = function (arr) {}
+module.exports.arraySum = function(arr) {
+	let sum = 0;
+	arr.forEach((ele) => {
+		sum = sum + ele;
+	});
+	return sum;
+}
 
 
 /**
@@ -70,7 +86,12 @@ module.exports.arraySum = function (arr) {}
  * 
  * @returns {Object} The start object
  */
-module.exports.objectForEach = function (obj, callback) {}
+module.exports.objectForEach = function(obj, callback) {
+	Object.keys(obj).forEach((key) => {
+		callback(key, obj[key]);
+	});
+	return obj;
+}
 
 
 /**
@@ -88,7 +109,13 @@ module.exports.objectForEach = function (obj, callback) {}
  * 
  * @returns {String} String reversed.
  */
-module.exports.reverseString = function (str) {}
+module.exports.reverseString = function(str) {
+	let reversedString = [];
+	for (let i = str.length - 1; i >= 0; i--) {
+		reversedString.push(str[i])
+	}
+	return reversedString.join('');
+}
 
 
 /**
@@ -106,7 +133,14 @@ module.exports.reverseString = function (str) {}
  * 
  * @returns {Boolean} Return true if is a palindrome.
  */
-module.exports.isPalindrome = function (str) {}
+module.exports.isPalindrome = function(str) {
+	const reversedArr = [];
+	for (let i = str.length - 1; i >= 0; i--) {
+		reversedArr.push(str[i])
+	}
+	const reversedStr = reversedArr.join('');
+	return str === reversedStr;
+}
 
 
 /**
@@ -125,7 +159,9 @@ module.exports.isPalindrome = function (str) {}
  * 
  * @returns {Boolean} If `a` is multiple of `b` returns true
  */
-module.exports.isMultipleOf = function (a, b) {}
+module.exports.isMultipleOf = function(a, b) {
+	return b % a === 0;
+}
 
 
 /**
@@ -143,7 +179,16 @@ module.exports.isMultipleOf = function (a, b) {}
  * 
  * @returns {String} Returns the longest word of `str`
  */
-module.exports.longestWord = function (str) {}
+module.exports.longestWord = function(str) {
+	const words = str.trim().replace(/\W/g, ' ').trim().split(/\s+/);
+	let longestWord = words[0];
+	for (let i = 1; i < words.length; i++) {
+		if (words[i].length > longestWord.length) {
+			longestWord = words[i];
+		}
+	}
+	return longestWord;
+}
 
 
 /**
@@ -161,7 +206,15 @@ module.exports.longestWord = function (str) {}
  * 
  * @returns {String} Returns a capitalized string
  */
-module.exports.capitalize = function (str) {}
+module.exports.capitalize = function(str) {
+	const words = str.split(' ');
+	const alteredWords = [];
+	words.forEach((word) => {
+		word = word[0].toUpperCase() + word.slice(1, word.length);
+		alteredWords.push(word);
+	});
+	return alteredWords.join(' ');
+}
 
 
 
@@ -180,7 +233,20 @@ module.exports.capitalize = function (str) {}
  * 
  * @returns {Number} Returns number of vowels in `str`
  */
-module.exports.vowelCount = function (str) {}
+module.exports.vowelCount = function(str) {
+	const vowels = {
+		'a': 1,
+		'e': 1,
+		'i': 1,
+		'o': 1,
+		'u': 1
+	}
+	let count = 0;
+	str.split('').forEach((letter) => {
+		count += (vowels[letter] || 0);
+	})
+	return count;
+}
 
 
 
@@ -199,7 +265,26 @@ module.exports.vowelCount = function (str) {}
  * 
  * @returns {Number} Returns character most used in the string.
  */
-module.exports.maxChar = function (str) {}
+module.exports.maxChar = function(str) {
+	const strMap = {};
+	let greatestCount = 0;
+	let letterWithGreatestCount = str[0];
+	str.split('').forEach((letter) => {
+		if(!strMap[letter]) {
+			strMap[letter] = 1;
+		} else {
+			strMap[letter]++;
+		}
+		if(greatestCount < strMap[letter]) {
+			letterWithGreatestCount = letter;
+			greatestCount = strMap[letter];
+		}
+	});
+	return {
+		char: letterWithGreatestCount,
+		count: greatestCount
+	}
+}
 
 
 /**
@@ -219,11 +304,25 @@ module.exports.maxChar = function (str) {}
  * 
  * @returns {Array} Returns an array of numbers
  */
-module.exports.fizzBuzz = function ({
+module.exports.fizzBuzz = function({
 	n1 = 3,
 	n2 = 5,
 	max = 100
-} = {}) {}
+} = {}) {
+	const arr = [];
+	for(let i = 0; i <= max; i++) {
+		if((i % n1 === 0) && (i % n2 === 0)) {
+			arr.push('FizzBuzz')
+		} else if(i % n1  === 0) {
+			arr.push('Fizz')
+		} else if(i % n2 === 0) {
+			arr.push('Buzz')
+		}  else {
+			arr.push(i)
+		}
+	};
+	return arr;
+}
 
 
 /**
@@ -241,7 +340,13 @@ module.exports.fizzBuzz = function ({
  * 
  * @returns {Number} Returns sum of all numbers from 0 to `counter`
  */
-module.exports.simpleAdding = function (num) {}
+module.exports.simpleAdding = function(num) {
+	let sum = 0;
+	for(let i = 1; i <= num; i++) {
+		sum += i;
+	}
+	return sum;
+}
 
 
 /**
@@ -260,7 +365,21 @@ module.exports.simpleAdding = function (num) {}
  * 
  * @returns {Array} Returns the tree generated from `paths`
  */
-module.exports.arrayToTree = function (...paths) {}
+module.exports.arrayToTree = function(...paths) {
+	const tree = [];
+	let lastChildRef = tree;
+	for(let i = 0; i < paths[0].length; i++) {
+		const obj = {
+			name: paths[0][i],
+		};
+		lastChildRef.push(obj);
+		if(i !== paths[0].length - 1) {
+			obj.children = [];
+		}
+		lastChildRef = obj.children;
+	}
+	return tree;
+}
 
 
 /**
@@ -280,7 +399,9 @@ module.exports.arrayToTree = function (...paths) {}
  * 
  * @returns {Boolean}
  */
-module.exports.alphabeticallySort = function (a, b) {}
+module.exports.alphabeticallySort = function(a, b) {
+	return a.localeCompare(b);
+}
 
 
 /**
@@ -296,7 +417,16 @@ module.exports.alphabeticallySort = function (a, b) {}
 *
 * @returns {String} or {Null}
 */
-module.exports.firstRecurringChar = function(str) {}
+module.exports.firstRecurringChar = function(str) {
+	const charCountMap = {};
+	str.split('').forEach((char) => {
+		if(!charCountMap[char]) {
+			charCountMap[char] = 0;
+		} else {
+			return char;
+		}
+	})
+}
 
 
 /**
@@ -312,4 +442,13 @@ module.exports.firstRecurringChar = function(str) {}
 *
 * @returns {Object}
 */
-module.exports.objectMerge = function(...objects) {}
+module.exports.objectMerge = function(...objects) {
+	let mergedObj = {};
+	objects.forEach(obj => {
+		mergedObj = {
+			...mergedObj,
+			...obj,
+		}
+	});
+	return mergedObj;
+}
